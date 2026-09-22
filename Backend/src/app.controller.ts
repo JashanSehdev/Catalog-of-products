@@ -30,22 +30,16 @@ export class ProductController {
   }
 
   @Post()
-  postProduct(@Body() product: SetProduct): string {
-    const success = this.productService.addProduct(product);
-
-    return success ? 'kaam ho gya' : 'kaam nahi hua';
+  postProduct(@Body() product: SetProduct): Product {
+    return this.productService.addProduct(product)
   }
 
   @Put()
-  updateProduct(@Body() product: Product): string {
-
-    const success = this.productService.editProduct(product);
-
-    return success ? 'Kaam ho gya' : 'kaam nahi hua';
+  updateProduct(@Body() product: Product): Product {
+    return this.productService.editProduct(product)
   }
   @Delete(':id')
   deleteProduct(@Param('id', ParseIntPipe) id: number) {
-    const success = this.productService.deleteProduct(id);
-    return success ? 'Kaam ho gya' : 'kaam nahi hua';
+      return this.productService.deleteProduct(id);
   }
 }

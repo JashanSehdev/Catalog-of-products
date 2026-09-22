@@ -1,44 +1,39 @@
 export type Product = {
     id : number,
-    publisher_email : string
     product_name : string,
     description : string,
-    img_url : string,
-    price : number,
+    Image : string,
+    price : string,
 }
 
 export type InputProduct = {
-    publisher_email : string
     product_name : string,
     description : string,
-    img_url : string,
-    price : number
+    Image : string,
+    price : string
 }
 
 
 export const productData : Product[] = [
-  {
-    "id": 1,
-    "publisher_email": "rahul.sharma@example.com",
-    "product_name": "Sony WH-1000XM5",
-    "description": "Premium wireless noise-cancelling headphones with excellent sound quality and long battery life.",
-    "img_url": "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&w=800&q=80",
-    "price": 29999
+    {
+    id: 1,
+    product_name: "MacBook Air M3",
+    Image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8",
+    description: "Lightweight Apple laptop with the M3 chip, Retina display, and excellent battery life.",
+    price: "99999"
   },
   {
-    "id": 2,
-    "publisher_email": "neha.verma@example.com",
-    "product_name": "Apple MacBook Air M2",
-    "description": "Lightweight and powerful laptop featuring Apple's M2 chip, ideal for work, coding, and everyday use.",
-    "img_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqLYkLog61KjatSXKT7Wg6fCG31166Az7j_Fn0wsz6_Q&s=10",
-    "price": 89999
+    id: 2,
+    product_name: "Sony WH-1000XM5",
+    Image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b",
+    description: "Premium wireless headphones with active noise cancellation and high-quality sound.",
+    price: "29999"
   },
   {
-    "id": 3,
-    "publisher_email": "arjun.mehta@example.com",
-    "product_name": "Nike Air Max 270",
-    "description": "Comfortable lifestyle sneakers with a modern design and responsive cushioning for everyday wear.",
-    "img_url": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",
-    "price": 12999
-  }
+    id: 3,
+    product_name: "iPhone 15 Pro",
+    Image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569",
+    description: "Powerful smartphone featuring a titanium design, advanced camera system, and A17 Pro chip.",
+    price: "119999"
+  },
 ]

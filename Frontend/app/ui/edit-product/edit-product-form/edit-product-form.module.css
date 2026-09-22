@@ -1,0 +1,54 @@
+
+
+.container {
+    padding: 1rem;   
+    max-width: 1100px;
+    margin: auto;
+}
+
+.form {
+    margin-top: 4rem;
+    display: grid;
+    grid-template: 
+    'image image name name category category'
+    'image image price price null null'
+    'description description description description  description description'
+    ;
+    gap: 2rem;
+    align-items: center;
+}
+.product_name{
+    grid-area: name;
+}
+.product_category {
+    grid-area: category;
+}
+
+.price{
+    grid-area: price;
+}
+
+.image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+    grid-area: image;
+    justify-self: center;
+}
+
+.description {
+    grid-area: description;
+}
+
+.button{
+    display: block !important;
+    margin: auto !important;
+    margin-top: 1rem !important;
+    width: 100% !important;
+
+}
+
+.imageP{
+    object-fit: cover;
+}

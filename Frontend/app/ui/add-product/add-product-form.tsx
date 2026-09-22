@@ -1,0 +1,105 @@
+'use client'
+import { Box, Button, FormHelperText, Paper, TextField, Typography } from "@mui/material";
+import styles from "./add-product-form.module.css";
+import Input from "./inputs/inputs";
+import { useForm } from "react-hook-form";
+import { FormData } from "./add-product-type";
+import CloudinaryUploader from "../upload-widget/upload-widget";
+import { useAppDispatch } from "@/app/hooks";
+import {  post_product } from "@/features/products-slice/list-product/product.action";
+import { Post_product} from "@/type/product.type";
+import { useRouter } from "next/navigation";
+
+const placeholder_image = 'https://imgs.search.brave.com/xY8ksS3Ai6-aEMTwKRioZFbCjs6R6vY3-36v42As0-E/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wbGFj/ZWhvbGQubmV0L2J1/aWxkaW5nLnN2Zw'
+
+export default function AddProductForm() {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<FormData>();
+
+  const onSubmit = async (data: FormData) => {
+    const product : Post_product = {
+       product_name: data.product_name,
+    product_category: data.product_category,
+    Image: data.Image,
+    description: data.description,
+    price: data.price,
+    }
+    dispatch(post_product(product))
+
+    router.replace('/');
+  };
+
+  console.log(watch())
+  return (
+    <Paper className={styles.container}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Typography variant="h5">Product Information</Typography>
+        <Box className={styles.form}>
+          <Box className={styles.product_name}>
+            <Typography>Product Name</Typography>
+            <Input
+              placeholder="Product Name"
+              type="text"
+              name="product_name"
+              register={register}
+            />
+            {errors.product_name && <FormHelperText error>{errors.product_name.message}</FormHelperText>}
+          </Box>
+
+          
+          <Box className={styles.product_category}>
+            <Typography>Product category</Typography>
+            <Input
+              placeholder="Product category"
+              type="text"
+              name="product_category"
+              register={register}
+            />
+            {errors.product_category && <FormHelperText error>{errors.product_category.message}</FormHelperText>}
+          </Box>
+
+          <Box className={styles.price}>
+            <Typography>Product Price</Typography>
+            <Input
+              placeholder="Product Price"
+              type="text"
+              name="price"
+              register={register}
+            />
+            {errors.price && <FormHelperText error>{errors.price.message}</FormHelperText>}
+          </Box>
+          <Box className={styles.description}>
+            <Typography>Description</Typography>
+            <TextField 
+                multiline
+                rows={4}
+                fullWidth
+                placeholder="Enter Your product description"
+                {...register('description')}
+            />
+            {errors.description && <FormHelperText error>{errors.description.message}</FormHelperText>}
+          </Box>
+          <Box className={styles.image}>
+            <Box 
+              component='img'
+              src={watch().Image || placeholder_image}
+              height={150}
+              width={150}
+            />
+            <input type="text" hidden {...register('Image')} />
+          <Box ><CloudinaryUploader setValue={setValue}/></Box>
+          </Box>
+          
+        </Box>
+        <Button type="submit" color="secondary" className={styles.button}>Submit</Button>
+      </form>
+    </Paper>
+  );
+}

@@ -1,0 +1,21 @@
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 3rem;
+    background-color: thistle;
+    padding: 0.5rem 1rem;
+}
+
+.link {
+    height: 100%;
+    color: white;
+    text-decoration: none;
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+}
