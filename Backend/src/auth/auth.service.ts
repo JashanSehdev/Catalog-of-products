@@ -1,7 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UsersService } from '../users/users.service.js';
+import { User, UsersService } from '../users/users.service.js';
 import { JwtService } from '@nestjs/jwt';
 
+type safeUser = Omit<User, 'password'>
 @Injectable()
 export class AuthService {
     constructor(
@@ -22,5 +23,17 @@ export class AuthService {
             accessToken : await this.jwtService.signAsync(payload)
         })
 
+    }
+
+    async register(username: string, pass: string) : Promise<{accessToken: string}>{
+        const user = await this.usersService.createUser(username, pass);
+
+        if (!user) throw new Error('Error occur while register')
+
+        const payload = { sub: user.userId, username: user.username};
+        
+        return ({
+            accessToken : await this.jwtService.signAsync(payload)
+        })
     }
 }
