@@ -49,6 +49,13 @@
 
 }
 
-.imageP{
+.image{
     object-fit: cover;
+}
+
+.buttons{
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    max-width: 500px;
 }

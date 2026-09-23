@@ -41,7 +41,7 @@ export const post_product= createAsyncThunk(
 
 export const edit_product= createAsyncThunk(
     'products/edit_product',
-    async(product: Post_product) => {
+    async(product: Product) => {
         try{
 
             const response = await api.put('/products', product);

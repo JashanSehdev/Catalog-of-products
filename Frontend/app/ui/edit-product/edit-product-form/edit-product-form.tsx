@@ -1,24 +1,31 @@
-'use client'
-import { Box, Button, FormHelperText, Paper, TextField, Typography } from "@mui/material";
+"use client";
+import {
+  Box,
+  Button,
+  FormHelperText,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import styles from "./edit-product-form.module.css";
 import Input from "../inputs/inputs";
 import { useForm } from "react-hook-form";
-import { FormData } from "./edit_product_type";
+import { FormData, Product_Schema } from "./edit_product_type";
 import CloudinaryUploader from "../../upload-widget/upload-widget";
 import { useAppDispatch } from "@/app/hooks";
-import {  edit_product, post_product } from "@/features/products-slice/list-product/product.action";
-import { Post_product} from "@/type/product.type";
-import { useRouter } from "next/navigation";
+import { edit_product } from "@/features/products-slice/list-product/product.action";
 import { Product } from "@/type/product.type";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-const placeholder_image = 'https://imgs.search.brave.com/xY8ksS3Ai6-aEMTwKRioZFbCjs6R6vY3-36v42As0-E/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wbGFj/ZWhvbGQubmV0L2J1/aWxkaW5nLnN2Zw'
+const placeholder_image =
+  "https://imgs.search.brave.com/xY8ksS3Ai6-aEMTwKRioZFbCjs6R6vY3-36v42As0-E/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wbGFj/ZWhvbGQubmV0L2J1/aWxkaW5nLnN2Zw";
 
 type Prop = {
-    product : Product
-    handleClose: () => void
-}
+  product: Product;
+  handleClose: () => void;
+};
 
-    export default function EditProductForm({product, handleClose} : Prop) {
+export default function EditProductForm({ product, handleClose }: Prop) {
   const dispatch = useAppDispatch();
   const {
     register,
@@ -27,14 +34,17 @@ type Prop = {
     setValue,
     formState: { errors },
   } = useForm<FormData>({
-        defaultValues : product
+    resolver: zodResolver(Product_Schema),
+    defaultValues: product,
   });
 
   const onSubmit = async (data: FormData) => {
     // Handle Edit
-    dispatch(edit_product(data))
+    dispatch(edit_product({ ...data, id: product.id }));
     handleClose();
   };
+
+  console.log(watch());
 
   return (
     <Paper className={styles.container}>
@@ -49,10 +59,13 @@ type Prop = {
               name="product_name"
               register={register}
             />
-            {errors.product_name && <FormHelperText error>{errors.product_name.message}</FormHelperText>}
+            {errors.product_name && (
+              <FormHelperText error>
+                {errors.product_name.message}
+              </FormHelperText>
+            )}
           </Box>
 
-          
           <Box className={styles.product_category}>
             <Typography>Product category</Typography>
             <Input
@@ -61,44 +74,67 @@ type Prop = {
               name="product_category"
               register={register}
             />
-            {errors.product_category && <FormHelperText error>{errors.product_category.message}</FormHelperText>}
+            {errors.product_category && (
+              <FormHelperText error>
+                {errors.product_category.message}
+              </FormHelperText>
+            )}
           </Box>
 
           <Box className={styles.price}>
             <Typography>Product Price</Typography>
             <Input
               placeholder="Product Price"
-              type="text"
+              type="number"
               name="price"
               register={register}
             />
-            {errors.price && <FormHelperText error>{errors.price.message}</FormHelperText>}
+            {errors.price && (
+              <FormHelperText error>{errors.price.message}</FormHelperText>
+            )}
           </Box>
           <Box className={styles.description}>
             <Typography>Description</Typography>
-            <TextField 
-                multiline
-                rows={4}
-                fullWidth
-                placeholder="Enter Your product description"
-                {...register('description')}
+            <TextField
+              multiline
+              rows={4}
+              fullWidth
+              placeholder="Enter Your product description"
+              {...register("description")}
             />
-            {errors.description && <FormHelperText error>{errors.description.message}</FormHelperText>}
+            {errors.description && (
+              <FormHelperText error>
+                {errors.description.message}
+              </FormHelperText>
+            )}
           </Box>
           <Box className={styles.image}>
-            <Box 
-              component='img'
+            <Box
+              component="img"
               src={watch().Image || placeholder_image}
               height={200}
               width={200}
               className={styles.image}
             />
-            <input type="text" hidden {...register('Image')} />
-          <Box ><CloudinaryUploader setValue={setValue}/></Box>
+            <input type="text" hidden {...register("Image")} />
+            <Box>
+              <CloudinaryUploader setValue={setValue} />
+            </Box>
           </Box>
-          
         </Box>
-        <Button type="submit" color="secondary" className={styles.button}>Submit</Button>
+        <Box className={styles.buttons}>
+          <Button type="submit" color="secondary" className={styles.button}>
+            Submit
+          </Button>
+          <Button
+            type="button"
+            color="secondary"
+            className={styles.button}
+            onClick={handleClose}
+          >
+            Decline
+          </Button>
+        </Box>
       </form>
     </Paper>
   );
