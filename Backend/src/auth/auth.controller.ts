@@ -1,8 +1,9 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service.js';
 import { AuthGuard } from './auth.guard.js';
 import { User } from '../users/users.service.js';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto/auth-credentials.dto.js';
+import type { Response } from 'express';
 
 type safeUser = Omit<User, 'password'>
 @Controller('auth')
@@ -11,8 +12,8 @@ export class AuthController {
 
     @HttpCode(HttpStatus.OK)
     @Post('login')
-    SignIn(@Body() signInDto : Record <string, any>){
-        return this.authServices.SignIn(signInDto.username, signInDto.password)
+    SignIn(@Body() signInDto : Record <string, any>,  @Res() res : Response){
+        return this.authServices.SignIn(signInDto.username, signInDto.password, res)
     }
 
     @UseGuards(AuthGuard)
@@ -23,7 +24,7 @@ export class AuthController {
 
     @HttpCode(HttpStatus.OK)
     @Post('register')
-    register(@Body() credentialsDto: AuthCredentialsDto) {
-        return this.authServices.register(credentialsDto.username, credentialsDto.password);
+    register(@Body() credentialsDto: AuthCredentialsDto,  @Res() res : Response) {
+        return this.authServices.register(credentialsDto.username, credentialsDto.password, res);
     }
 }
