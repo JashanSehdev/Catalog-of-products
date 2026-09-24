@@ -1,7 +1,7 @@
 
 
 .container {
-    padding: 1rem;   
+    padding: 2rem;   
     max-width: 1100px;
     margin: auto;
 }
@@ -54,4 +54,9 @@
     gap: 1rem;
     justify-content: center;
     max-width: 500px;
+}
+
+.title {
+    margin-bottom: 1rem !important;
+    font-weight: 550 !important;
 }

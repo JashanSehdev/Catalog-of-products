@@ -20,7 +20,7 @@ export default function CloudinaryUploader({ setValue } : Prop) {
     >
       {({ open }) => (
         // <button onClick={() => open()} type='button'>Upload Image</button>
-        <Button type="button" onClick={() => open()}>
+        <Button size="small" variant="contained" color="secondary" type="button" onClick={() => open()}>
           Upload Image
         </Button>
       )}

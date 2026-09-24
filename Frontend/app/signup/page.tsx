@@ -7,14 +7,14 @@ import { useAppSelector } from "../hooks";
 import { useEffect } from "react";
 
 export default function SignupPage () {
-    const user = useAppSelector((state) => state.auth.user)
-      console.log(user)
-        const router = useRouter();
-        useEffect(()=>{
-          if (user) {
-            router.replace('/')
-          }
-        },[user])
+    // const user = useAppSelector((state) => state.auth.user)
+    //   console.log(user)
+    //     const router = useRouter();
+    //     useEffect(()=>{
+    //       if (user) {
+    //         router.replace('/')
+    //       }
+    //     },[user])
     return(
         <Box>
             <SignUpForm/>

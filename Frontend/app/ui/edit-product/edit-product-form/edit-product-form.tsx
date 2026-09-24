@@ -49,7 +49,7 @@ export default function EditProductForm({ product, handleClose }: Prop) {
   return (
     <Paper className={styles.container}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Typography variant="h5">Product Information</Typography>
+        <Typography variant="h3">Edit your Product</Typography>
         <Box className={styles.form}>
           <Box className={styles.product_name}>
             <Typography>Product Name</Typography>
@@ -122,13 +122,13 @@ export default function EditProductForm({ product, handleClose }: Prop) {
             </Box>
           </Box>
         </Box>
-        <Box className={styles.buttons}>
-          <Button type="submit" color="secondary" className={styles.button}>
+        <Box   className={styles.buttons}>
+          <Button type="submit" variant="contained" className={styles.button}>
             Submit
           </Button>
           <Button
             type="button"
-            color="secondary"
+            variant="contained"
             className={styles.button}
             onClick={handleClose}
           >

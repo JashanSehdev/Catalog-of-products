@@ -8,13 +8,14 @@ import styles from './login-form.module.css';
 import { Divider, Paper, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { loginUser } from "@/features/auth-slice/manage-auth/auth.action";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
 import { GoogleAuthButton } from "../auth/auth-buttons";
 
 
 export default function LoginForm() {
+  const router = useRouter()
   const dispatch = useAppDispatch()
   const {
     register,
@@ -26,7 +27,8 @@ export default function LoginForm() {
 
   const onSubmit = async (data: FormData) => {
     console.log(data)
-    dispatch(loginUser(data))
+    await dispatch(loginUser(data))
+    router.replace('/')
   };
 
   return (

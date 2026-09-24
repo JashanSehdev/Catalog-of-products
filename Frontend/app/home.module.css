@@ -2,4 +2,13 @@
 .product_list{
     display: flex;
     gap: 0.5rem;
+    width: 1128px;
+    margin: auto;
+}
+
+.title{
+    margin-top: 2rem !important;
+    margin-bottom: 1rem !important;
+    text-align: center;
+    background-color: var(--mui-bg-paper);
 }

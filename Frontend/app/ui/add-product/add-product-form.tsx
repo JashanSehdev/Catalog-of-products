@@ -52,7 +52,7 @@ export default function AddProductForm() {
   return (
     <Paper className={styles.container}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Typography variant="h5">Product Information</Typography>
+        <Typography variant="h3" className={styles.title}>Add Your Product</Typography>
         <Box className={styles.form}>
           <Box className={styles.product_name}>
             <Typography>Product Name</Typography>
@@ -108,16 +108,16 @@ export default function AddProductForm() {
           </Box>
         </Box>
         <Box className={styles.buttons}>
-          <Button type="submit" color="secondary" className={styles.button}>
+          <Button type="submit"variant="contained" className={styles.button}>
             Publish
           </Button>
           <Button
             type="button"
-            color="secondary"
             className={styles.button}
             onClick={() => {
               router.replace("/");
             }}
+            variant="contained"
           >
             Decline
           </Button>

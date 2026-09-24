@@ -30,3 +30,25 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 } */
+
+:root {
+  --mui-primary-main: #5d64e6;
+  --mui-primary-light: rgb(125, 131, 235);
+  --mui-primary-dark: rgb(65, 70, 161);
+  --mui-primary-contrast: #f3f5fd;
+  --mui-secondary-main: #977ae0;
+  --mui-secondary-light: rgb(171, 148, 230);
+  --mui-secondary-dark: rgb(105, 85, 156);
+  --mui-secondary-contrast: #f5f4fb;
+  --mui-success-main: #009843;
+  --mui-warning-main: #da9600;
+  --mui-error-main: #df2225;
+  --mui-info-main: #0081d0;
+  --mui-bg-default: #f9fafc;
+  --mui-bg-paper: #f0f2f5;
+  --mui-text-primary: #0a0f1a;
+  --mui-text-secondary: #545861;
+  --mui-divider: #e0e3e8;
+  --mui-radius: 8px;
+  --mui-font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}

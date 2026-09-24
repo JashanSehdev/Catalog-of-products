@@ -52,6 +52,8 @@ export const makeStore = (): AppStore => {
   return store as AppStore;
 };
 
+export const store = makeStore();
+
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = ReturnType<typeof createBaseStore>["dispatch"];

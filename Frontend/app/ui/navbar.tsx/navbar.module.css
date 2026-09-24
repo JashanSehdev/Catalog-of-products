@@ -1,21 +1,24 @@
-
 .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 3rem;
-    background-color: thistle;
-    padding: 0.5rem 1rem;
+
+  background-color: var(--mui-bg-paper);
+  padding: 0.5rem;
+}
+.sub_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto;
+  width: 1120px;
 }
 
 .link {
-    height: 100%;
-    color: white;
-    text-decoration: none;
+  height: 100%;
+  color: white;
+  text-decoration: none;
 }
 
-.buttons{
-    display: flex;
-    justify-content: space-around;
-    gap: 1rem;
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
 }

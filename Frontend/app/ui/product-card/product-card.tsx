@@ -5,9 +5,10 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Product } from '@/type/product.type';
-import { useAppDispatch } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { delete_product } from '@/features/products-slice/list-product/product.action';
 import EditProductModal from '../edit-product/edit_product_modal';
+import { userAgent } from 'next/server';
 
 type Prop = {
     product : Product
@@ -15,6 +16,7 @@ type Prop = {
 
 
 export default function MediaCard({product} : Prop) {
+  const user = useAppSelector((state) => state.auth.user)
   const dispatch = useAppDispatch()
   const handleDelete = () => {
   dispatch(delete_product(product.id))
@@ -23,7 +25,7 @@ export default function MediaCard({product} : Prop) {
   return (
     <Card sx={{ width: 300 }}>
       <CardMedia
-        sx={{ height: 140 }}
+        sx={{ height: 250 }}
         image={product.Image}
         title={product.product_name}
       />
@@ -35,10 +37,15 @@ export default function MediaCard({product} : Prop) {
           {product.description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button onClick={handleDelete}>Delete</Button>
+      {
+        user?.role === 'seller' && (
+          <CardActions>
+        <Button size='small' variant='contained' onClick={handleDelete}>Delete</Button>
         <EditProductModal product={product}/>
       </CardActions>
+        )
+      }
+      
     </Card>
   );
 }

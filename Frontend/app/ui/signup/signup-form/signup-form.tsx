@@ -5,17 +5,31 @@ import FormField from "./form-field/form-field";
 import PasswordField from "./form-field/password-field";
 import { zodResolver } from "@hookform/resolvers/zod";
 import styles from "./signup-form.module.css";
-import { Box, Divider, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  SelectChangeEvent,
+  Typography,
+} from "@mui/material";
 import { useAppDispatch } from "@/app/hooks";
 import { registerUser } from "@/features/auth-slice/manage-auth/auth.action";
 import Link from "next/link";
-import { GoogleAuthButton } from "../../auth/auth-buttons";
+import { GoogleAuthButton, GoogleAuthSignupButton } from "../../auth/auth-buttons";
+import { watch } from "fs";
+import { useState } from "react";
 
 function SignUpForm() {
   const dispatch = useAppDispatch();
+  const [role, setRole] = useState('seller')
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(signUpSchema),
@@ -25,6 +39,10 @@ function SignUpForm() {
     console.log(data);
     const { confirmPassword, ...user } = data;
     dispatch(registerUser(user));
+  };
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setRole(event.target.value as string);
   };
 
   return (
@@ -62,6 +80,21 @@ function SignUpForm() {
           error={errors.confirmPassword}
         />
 
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Role</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={role}
+            label="Age"
+            {...register("role")}
+            onChange={handleChange}
+          >
+            <MenuItem value={"seller"}>seller</MenuItem>
+            <MenuItem value={"buyer"}>buyer</MenuItem>
+          </Select>
+        </FormControl>
+
         <Link href="/login">
           <Typography>Login</Typography>
         </Link>
@@ -71,7 +104,7 @@ function SignUpForm() {
         </button>
       </form>
       <Divider />
-      <GoogleAuthButton />
+      <GoogleAuthSignupButton />
     </Paper>
   );
 }
