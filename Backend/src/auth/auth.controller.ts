@@ -12,8 +12,9 @@ import {
 import { AuthService } from './auth.service.js';
 import { AuthGuard } from './auth.guard.js';
 import { User } from '../users/users.service.js';
-import { AuthCredentialsDto } from './dto/auth-credentials.dto/auth-credentials.dto.js';
+import { AuthCredentialsDto, GoogleCredentialDto } from './dto/auth-credentials.dto/auth-credentials.dto.js';
 import type { Response } from 'express';
+import { PassThrough } from 'stream';
 
 type safeUser = Omit<User, 'password'>;
 @Controller('auth')
@@ -22,18 +23,22 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  async SignIn(@Body() signInDto: Record<string, any>, @Res() res: Response) {
+  async SignIn(
+    @Body() signInDto: Record<string, any>,
+    @Res({ passthrough: true }) res: Response,
+  ) {
     const access_token = await this.authServices.SignIn(
-      signInDto.username,
+      signInDto.email,
       signInDto.password,
     );
 
     res.cookie('access_token', access_token.accessToken, {
-      httpOnly: true,
+      expires: new Date(new Date().getTime() + 120 * 1000),
+      httpOnly: false,
       secure: true,
     });
 
-  return res.json({message : 'User Logged In'})
+    return access_token.payload;
   }
 
   @UseGuards(AuthGuard)
@@ -44,18 +49,40 @@ export class AuthController {
 
   @HttpCode(HttpStatus.CREATED)
   @Post('register')
-  async register(@Body() credentialsDto: AuthCredentialsDto, @Res() res: Response) {
+  async register(
+    @Body() credentialsDto: AuthCredentialsDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
     const access_token = await this.authServices.register(
       credentialsDto.username,
+      credentialsDto.email,
       credentialsDto.password,
     );
 
     res.cookie('access_token', access_token.accessToken, {
-      expires: new Date(new Date().getTime() + 30 * 1000),
-      sameSite: 'strict',
+      expires: new Date(new Date().getTime() + 120 * 1000),
       httpOnly: true,
+      secure: true,
     });
 
-    return res.json({message : 'User created'})
+    return access_token.payload;
+  }
+
+  @Get('logout')
+  logout(@Res({ passthrough: true }) res: Response) {
+    res.cookie('access_token', '');
+    return { message: 'you have been logout' };
+  }
+
+  @Post('google')
+  async login(@Body() credentialDto: GoogleCredentialDto, @Res({ passthrough: true }) res: Response ) {
+    const access_token = await this.authServices.googleRegister(credentialDto.username, credentialDto.email);
+    res.cookie('access_token', access_token.accessToken, {
+      expires: new Date(new Date().getTime() + 30 * 1000),
+      httpOnly: false,
+      secure: true,
+    });
+
+    return access_token.payload
   }
 }
