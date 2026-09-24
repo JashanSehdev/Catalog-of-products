@@ -1,22 +1,16 @@
 "use client";
-import {
-  Box,
-  Button,
-  FormHelperText,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, FormHelperText, Paper, TextField, Typography } from "@mui/material";
 import styles from "./add-product-form.module.css";
 import Input from "./inputs/inputs";
 import { useForm } from "react-hook-form";
 import { FormData, Product_Schema } from "./add-product-type";
 import CloudinaryUploader from "../upload-widget/upload-widget";
-import { useAppDispatch } from "@/app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { post_product } from "@/features/products-slice/list-product/product.action";
 import { Post_product } from "@/type/product.type";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 
 const placeholder_image =
   "https://imgs.search.brave.com/xY8ksS3Ai6-aEMTwKRioZFbCjs6R6vY3-36v42As0-E/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wbGFj/ZWhvbGQubmV0L2J1/aWxkaW5nLnN2Zw";
@@ -24,6 +18,13 @@ const placeholder_image =
 export default function AddProductForm() {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
+  console.log(user);
+  useEffect(() => {
+    if (!user) {
+      router.replace("/login");
+    }
+  }, [user]);
   const {
     register,
     handleSubmit,
@@ -55,16 +56,9 @@ export default function AddProductForm() {
         <Box className={styles.form}>
           <Box className={styles.product_name}>
             <Typography>Product Name</Typography>
-            <Input
-              placeholder="Product Name"
-              type="text"
-              name="product_name"
-              register={register}
-            />
+            <Input placeholder="Product Name" type="text" name="product_name" register={register} />
             {errors.product_name && (
-              <FormHelperText error>
-                {errors.product_name.message}
-              </FormHelperText>
+              <FormHelperText error>{errors.product_name.message}</FormHelperText>
             )}
           </Box>
 
@@ -77,23 +71,14 @@ export default function AddProductForm() {
               register={register}
             />
             {errors.product_category && (
-              <FormHelperText error>
-                {errors.product_category.message}
-              </FormHelperText>
+              <FormHelperText error>{errors.product_category.message}</FormHelperText>
             )}
           </Box>
 
           <Box className={styles.price}>
             <Typography>Product Price</Typography>
-            <Input
-              placeholder="Product Price"
-              type="number"
-              name="price"
-              register={register}
-            />
-            {errors.price && (
-              <FormHelperText error>{errors.price.message}</FormHelperText>
-            )}
+            <Input placeholder="Product Price" type="number" name="price" register={register} />
+            {errors.price && <FormHelperText error>{errors.price.message}</FormHelperText>}
           </Box>
           <Box className={styles.description}>
             <Typography>Description</Typography>
@@ -105,9 +90,7 @@ export default function AddProductForm() {
               {...register("description")}
             />
             {errors.description && (
-              <FormHelperText error>
-                {errors.description.message}
-              </FormHelperText>
+              <FormHelperText error>{errors.description.message}</FormHelperText>
             )}
           </Box>
           <Box className={styles.image}>
@@ -121,9 +104,7 @@ export default function AddProductForm() {
             <Box>
               <CloudinaryUploader setValue={setValue} />
             </Box>
-            {errors.Image && (
-              <FormHelperText error>{errors.Image.message}</FormHelperText>
-            )}
+            {errors.Image && <FormHelperText error>{errors.Image.message}</FormHelperText>}
           </Box>
         </Box>
         <Box className={styles.buttons}>

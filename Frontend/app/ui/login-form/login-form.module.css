@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 1rem;
+
+
+}
+
+.root {
+    margin-top: 3rem !important;
+    width: fit-content;
+    margin:auto;
+    padding: 1rem;
+}
+
+.container p {
+    color: red;
+    font-size: smaller;
+    font-weight:lighter;
+    margin-left: 1rem;
+    margin-top: 0.1rem;
+}
+
+.submit_button {
+
+    background-color: blueviolet;
+    color: white;
+    font-size: larger;
+    padding: 1rem;
+}  
+
