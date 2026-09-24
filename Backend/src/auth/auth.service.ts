@@ -14,7 +14,6 @@ export class AuthService {
   async SignIn(
     username: string,
     pass: string,
-    res: Response
   ): Promise<{ accessToken: string }> {
     const user = await this.usersService.findOne(username);
 
@@ -26,11 +25,6 @@ export class AuthService {
 
     const accessToken = await this.jwtService.signAsync(payload);
 
-    res.cookie('access_token', accessToken, {
-        httpOnly: true,
-        secure: true
-    })
-
     return {
       accessToken
     };
@@ -39,7 +33,6 @@ export class AuthService {
   async register(
     username: string,
     pass: string,
-    res: Response
   ): Promise<{ accessToken: string }> {
     const user = await this.usersService.createUser(username, pass);
 
@@ -49,10 +42,6 @@ export class AuthService {
 
     const accessToken = await this.jwtService.signAsync(payload);
 
-    res.cookie('access_token', accessToken, {
-        httpOnly: true,
-        secure:  true
-    })
     return {
       accessToken
     };
