@@ -10,9 +10,11 @@ export type Product = {
 }
 
 export type Post_product= {
+    publisher : number,
     product_name : string,
     product_category: string
     Image: string,
     description : string,
-    price : string,
+    price : number,
+    hidden : boolean
 }

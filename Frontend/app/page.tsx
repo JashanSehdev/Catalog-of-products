@@ -15,11 +15,11 @@ export default function Home() {
   const user = useAppSelector((state) => state.auth.user);
   const router = useRouter();
 
-  function check() {
-    const cookie = getCookie("access_token");
-    console.log("Cookie from layout", cookie);
-    if (!cookie) router.replace('/login')
-  }
+  // function check() {
+  //   const cookie = getCookie("access_token");
+  //   console.log("Cookie from layout", cookie);
+  //   if (!cookie) router.replace('/login')
+  // }
   const decodeJWT = async () => {
     const allCookies = document.cookie.split(";");
 
@@ -44,7 +44,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(fetch_all_products());
     decodeJWT();
-    check()
+    // check()
   }, []);
 
   // put jwt token in localstorage

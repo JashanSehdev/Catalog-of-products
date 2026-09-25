@@ -42,7 +42,7 @@ export default function LoginForm() {
 
   return (
     <Paper className={styles.root}>
-      <Typography variant="h3"> Login In </Typography>
+      <Typography align="center" variant="h3"> Login</Typography>
       <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
         <FormField
           type="email"
@@ -60,14 +60,14 @@ export default function LoginForm() {
           error={errors.password}
         />
 
-        <Link href="/signup" color="secondary">
+        <Link href="/signup" color="secondary" style={{textDecoration: 'none'}}>
       
-            <Button variant="contained">Signup</Button>
+            Don't have account?<Button variant="contained">Signup</Button>
   
         </Link>
 
         <button type="submit" className={styles.submit_button}>
-          Submit
+          Login
         </button>
       </form>
 

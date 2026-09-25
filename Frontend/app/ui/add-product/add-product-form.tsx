@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, FormHelperText, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button, FormControlLabel, FormHelperText, Paper, Switch, TextField, Typography } from "@mui/material";
 import styles from "./add-product-form.module.css";
 import Input from "./inputs/inputs";
 import { useForm } from "react-hook-form";
@@ -36,12 +36,15 @@ export default function AddProductForm() {
   });
 
   const onSubmit = async (data: FormData) => {
+    if(!user) return
     const product: Post_product = {
       product_name: data.product_name,
       product_category: data.product_category,
       Image: data.Image,
       description: data.description,
       price: data.price,
+      publisher : user.id,
+      hidden : data.hidden
     };
     dispatch(post_product(product));
 
@@ -79,6 +82,10 @@ export default function AddProductForm() {
             <Typography>Product Price</Typography>
             <Input placeholder="Product Price" type="number" name="price" register={register} />
             {errors.price && <FormHelperText error>{errors.price.message}</FormHelperText>}
+          </Box>
+
+          <Box>
+            <FormControlLabel className={styles.switch} {...register('hidden')} control={<Switch defaultChecked />} label="public" />
           </Box>
           <Box className={styles.description}>
             <Typography>Description</Typography>

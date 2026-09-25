@@ -42,7 +42,7 @@ export class AuthService {
   ): Promise<{ accessToken: string, payload : any }> {
     const userData =  {
       username,
-      email,
+      email, 
       password,
       role
     }
@@ -71,6 +71,8 @@ export class AuthService {
       password: 'Google Auth',
       role 
     }
+
+    console.log("User data", userData)
     const user = await this.userService.createIfNew(userData)
 
     if (!user) throw new Error('Error occur while register');

@@ -13,5 +13,6 @@ export type LoginUser = {
 
 export type GoogleLogin = {
     email : string,
-    username: string
+    username: string,
+    role : string
 }

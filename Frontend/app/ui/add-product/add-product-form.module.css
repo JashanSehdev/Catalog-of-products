@@ -11,7 +11,7 @@
     display: grid;
     grid-template: 
     'image image name name category category'
-    'image image price price null null'
+    'image image price price switch switch'
     'description description description description  description description'
     ;
     gap: 2rem;

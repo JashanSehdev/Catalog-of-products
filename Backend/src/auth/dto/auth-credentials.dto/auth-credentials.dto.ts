@@ -34,7 +34,6 @@ export class GoogleCredentialDto {
   @IsEmail({}, { message: 'Please provide valid Email.' })
   email: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsString({message: 'no role has been sent'})
   role : 'seller' | 'buyer';
 }

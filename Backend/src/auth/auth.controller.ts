@@ -62,7 +62,7 @@ export class AuthController {
 
     res.cookie('access_token', access_token.accessToken, {
       expires: new Date(new Date().getTime() + 120 * 1000),
-      httpOnly: true,
+      httpOnly: false,
       secure: true,
     });
 
@@ -77,6 +77,7 @@ export class AuthController {
 
   @Post('google')
   async login(@Body() credentialDto: GoogleCredentialDto, @Res({ passthrough: true }) res: Response ) {
+
     const access_token = await this.authServices.googleRegister(credentialDto.username, credentialDto.email, credentialDto.role);
     res.cookie('access_token', access_token.accessToken, {
       expires: new Date(new Date().getTime() + 30 * 1000),

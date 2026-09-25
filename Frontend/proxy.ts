@@ -34,7 +34,9 @@ export function proxy(request: NextRequest) {
 export const config = {
   matcher: [
     "/dashboard/:path*",
-    "/profile/:path*",
-    "/products/:path*",
+     "/login/:path*",
+     "/signup/:path",
+     "/add-product/:path"
+
   ],
 };
