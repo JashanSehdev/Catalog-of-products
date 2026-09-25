@@ -15,5 +15,6 @@ export class User {
   @Column({ type: 'varchar' })
   password: string;
 
-
+  @Column({ type: 'varchar' })
+  role: 'seller' | 'buyer';
 }

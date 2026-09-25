@@ -35,4 +35,9 @@ export class CreateUserDto {
 //     one special character`,
 //   })
   password: string;
+
+
+  @IsNotEmpty()
+  @IsString()
+  role: 'seller' | 'buyer';
 }
