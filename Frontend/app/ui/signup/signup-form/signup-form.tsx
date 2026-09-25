@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import styles from "./signup-form.module.css";
 import {
   Box,
+  Button,
   Divider,
   FormControl,
   InputLabel,
@@ -21,11 +22,13 @@ import { registerUser } from "@/features/auth-slice/manage-auth/auth.action";
 import Link from "next/link";
 import { GoogleAuthButton, GoogleAuthSignupButton } from "../../auth/auth-buttons";
 import { watch } from "fs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
 function SignUpForm() {
   const dispatch = useAppDispatch();
-  const [role, setRole] = useState('seller')
+  const [role, setRole] = useState("seller");
   const {
     register,
     handleSubmit,
@@ -34,11 +37,23 @@ function SignUpForm() {
   } = useForm<FormData>({
     resolver: zodResolver(signUpSchema),
   });
+  const router = useRouter();
 
+  function check() {
+    const cookie = getCookie("access_token");
+    console.log("Cookie from signup", cookie);
+    if (cookie) router.replace("/");
+  }
+
+  useEffect(() => {
+    check();
+  }, []);
   const onSubmit = async (data: FormData) => {
     console.log(data);
     const { confirmPassword, ...user } = data;
-    dispatch(registerUser(user));
+    await dispatch(registerUser(user));
+    
+    check();
   };
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -96,7 +111,7 @@ function SignUpForm() {
         </FormControl>
 
         <Link href="/login">
-          <Typography>Login</Typography>
+          <Button variant="contained">Login</Button>
         </Link>
 
         <button type="submit" className={styles.submit_button}>

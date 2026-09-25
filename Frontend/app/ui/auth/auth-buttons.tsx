@@ -21,7 +21,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { RollerShades } from "@mui/icons-material";
 
 const style = {
   position: "absolute",
@@ -44,8 +45,9 @@ export function GoogleAuthButton() {
     const user = {
       username: user_data.username ?? "username",
       email: user_data.email ?? "anything@gmail.com",
+      role : "buyer"
     };
-    dispatch(googleLogin(user));
+    await dispatch(googleLogin(user));
     router.replace("/");
   };
   return (
@@ -83,7 +85,7 @@ export function GoogleAuthSignupButton() {
       email: user_data.email ?? "anything@gmail.com",
       role
     };
-    dispatch(googleLogin(user));
+    await dispatch(googleLogin(user));
     router.replace("/");
   };
 
@@ -95,10 +97,10 @@ export function GoogleAuthSignupButton() {
       register,
       handleSubmit,
       formState: { errors },
-    } = useForm<FormData>()
+    } = useForm<Input>()
 
   
-    const onSubmit = async (data: FormData) => {
+    const onSubmit : SubmitHandler<Input> = async (data: Input) => {
       console.log(data);
       await handleLogin()
       handleClose()

@@ -1,22 +1,22 @@
-'use client'
+"use client";
 import { useForm } from "react-hook-form";
-import { FormData, signUpSchema } from './form-field/form-field.type';
+import { FormData, signUpSchema } from "./form-field/form-field.type";
 import FormField from "./form-field/form-field";
-import PasswordField from './form-field/password-field';
+import PasswordField from "./form-field/password-field";
 import { zodResolver } from "@hookform/resolvers/zod";
-import styles from './login-form.module.css';
-import { Divider, Paper, Typography } from "@mui/material";
+import styles from "./login-form.module.css";
+import { Button, Divider, Paper, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { loginUser } from "@/features/auth-slice/manage-auth/auth.action";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
 import { GoogleAuthButton } from "../auth/auth-buttons";
-
+import { getCookie } from "cookies-next";
 
 export default function LoginForm() {
-  const router = useRouter()
-  const dispatch = useAppDispatch()
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -25,15 +25,24 @@ export default function LoginForm() {
     resolver: zodResolver(signUpSchema),
   });
 
+  function check() {
+    const cookie = getCookie("access_token");
+    console.log("Cookie from layout", cookie);
+    if (cookie) router.replace("/");
+  }
+
+  useEffect(() => {
+    check();
+  }, []);
   const onSubmit = async (data: FormData) => {
-    console.log(data)
-    await dispatch(loginUser(data))
-    router.replace('/')
+    console.log(data);
+    await dispatch(loginUser(data));
+    check();
   };
 
   return (
     <Paper className={styles.root}>
-        <Typography variant="h3"> Login In </Typography>
+      <Typography variant="h3"> Login In </Typography>
       <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
         <FormField
           type="email"
@@ -50,10 +59,11 @@ export default function LoginForm() {
           register={register}
           error={errors.password}
         />
-        
 
         <Link href="/signup" color="secondary">
-          <Typography>register</Typography>
+      
+            <Button variant="contained">Signup</Button>
+  
         </Link>
 
         <button type="submit" className={styles.submit_button}>
@@ -62,8 +72,7 @@ export default function LoginForm() {
       </form>
 
       <Divider />
-      <GoogleAuthButton/>
+      <GoogleAuthButton />
     </Paper>
   );
 }
-
