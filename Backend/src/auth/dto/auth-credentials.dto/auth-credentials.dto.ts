@@ -1,9 +1,15 @@
-import { IsEmail, IsNotEmpty, isString, IsString, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  isString,
+  IsString,
+  MinLength,
+} from 'class-validator';
 
 export class AuthCredentialsDto {
   @IsString()
   @IsNotEmpty()
-  username!: string;
+  username : string;
 
   @IsNotEmpty()
   @IsEmail({}, { message: 'Please provide valid Email.' })
@@ -12,9 +18,12 @@ export class AuthCredentialsDto {
   @IsNotEmpty()
   @IsString()
   @MinLength(6)
-  password!: string;
-}
+  password : string;
 
+  @IsString()
+  @IsNotEmpty()
+  role : 'seller' | 'buyer';
+}
 
 export class GoogleCredentialDto {
   @IsString()
@@ -25,4 +34,6 @@ export class GoogleCredentialDto {
   @IsEmail({}, { message: 'Please provide valid Email.' })
   email: string;
 
+  @IsString({message: 'no role has been sent'})
+  role : 'seller' | 'buyer';
 }

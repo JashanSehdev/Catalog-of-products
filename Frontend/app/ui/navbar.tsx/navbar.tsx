@@ -16,11 +16,11 @@ export default function Navbar() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
   const router = useRouter()
-    function check() {
-        const cookie = getCookie("access_token");
-        console.log("Cookie from layout", cookie);
-        if (!cookie) router.replace('/login')
-      }
+    // function check() {
+    //     const cookie = getCookie("access_token");
+    //     console.log("Cookie from layout", cookie);
+    //     if (!cookie) router.replace('/login')
+    //   }
 
   return (
     <Box className={styles.container}>
@@ -43,7 +43,7 @@ export default function Navbar() {
             variant="contained"
             onClick={async() => {
               await dispatch(logoutUser());
-              check();
+              // check();
             }}
           >
             Logout

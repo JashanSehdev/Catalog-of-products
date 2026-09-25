@@ -23,6 +23,7 @@ export class UserService {
     user.email = createUserDto.email;
     user.username = createUserDto.username;
     user.password = hashed_password;
+    user.role = createUserDto.role
     return this.userRepository.save(user);
   }
 
@@ -33,6 +34,7 @@ export class UserService {
     user.email = createUserDto.email;
     user.username = createUserDto.username;
     user.password = createUserDto.password;
+    user.role = createUserDto.role
     return this.userRepository.save(user);
   }
 

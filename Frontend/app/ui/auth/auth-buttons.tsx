@@ -40,13 +40,15 @@ export function GoogleAuthButton() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const handleLogin = async () => {
+    console.log('auth button called')
     const user_data = await handleGoogleLogin();
     if (!user_data.id || !user_data.email || !user_data.username) return;
     const user = {
       username: user_data.username ?? "username",
       email: user_data.email ?? "anything@gmail.com",
-      role : "buyer"
+      role : 'buyer'
     };
+    console.log("user from google auth", user)
     await dispatch(googleLogin(user));
     router.replace("/");
   };
@@ -69,7 +71,7 @@ type Input = {
 }
 
 export function GoogleAuthSignupButton() {
-  const [role, setRole] = useState("seller");
+  const [role, setRole] = useState<'seller' | 'buyer'>("seller");
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -85,12 +87,14 @@ export function GoogleAuthSignupButton() {
       email: user_data.email ?? "anything@gmail.com",
       role
     };
+
+    console.log("user from google auth", user)
     await dispatch(googleLogin(user));
     router.replace("/");
   };
 
   const handleChange = (event: SelectChangeEvent) => {
-    setRole(event.target.value as string);
+    setRole(event.target.value as 'seller' | 'buyer');
   };
 
   const {

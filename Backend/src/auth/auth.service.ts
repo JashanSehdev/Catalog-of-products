@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { User, UsersService } from '../users/users.service.js';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service.js';
@@ -24,7 +24,7 @@ export class AuthService {
     if (!isAuthenticated) {
       throw new UnauthorizedException();
     }
-    const payload = { id: user.id, username: user.username, email : user.email };
+    const payload = { id: user.id, username: user.username, email : user.email, role : user.role };
 
     const accessToken = await this.jwtService.signAsync(payload);
 
@@ -38,17 +38,19 @@ export class AuthService {
     username: string,
     email : string,
     password: string,
+    role : 'seller' | 'buyer'
   ): Promise<{ accessToken: string, payload : any }> {
     const userData =  {
       username,
-      email,
-      password
+      email, 
+      password,
+      role
     }
     const user = await this.userService.createUser(userData)
 
-    if (!user) throw new Error('Error occur while register');
+    if (!user) throw new ConflictException('user already exist')
 
-    const payload = { id: user.id, email : user.email, username: user.username };
+    const payload = { id: user.id, email : user.email, username: user.username, role : user.role };
 
     const accessToken = await this.jwtService.signAsync(payload);
 
@@ -61,17 +63,21 @@ export class AuthService {
   async googleRegister(
     username: string,
     email: string,
+    role : 'buyer' | 'seller'
   ) : Promise<{ accessToken: string, payload : any }>{
     const userData =  {
       username,
       email,
-      password: 'Google Auth'
+      password: 'Google Auth',
+      role 
     }
+
+    console.log("User data", userData)
     const user = await this.userService.createIfNew(userData)
 
     if (!user) throw new Error('Error occur while register');
 
-    const payload = { id: user.id, email : user.email, username: user.username };
+    const payload = { id: user.id, email : user.email, username: user.username, role : user.role };
 
     const accessToken = await this.jwtService.signAsync(payload);
 
